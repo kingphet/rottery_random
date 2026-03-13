@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ຊື້ເລກເດີພີ່ນ້ອງເອີຍ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Noto+Sans+Lao:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pink:    #ff6eb4;
+  --pink2:   #ffb3d9;
+  --yellow:  #ffdd57;
+  --yellow2: #fff3a3;
+  --mint:    #5ee7b0;
+  --mint2:   #b8f5db;
+  --sky:     #5ec4ff;
+  --sky2:    #bde8ff;
+  --peach:   #ff9a6c;
+  --purple:  #b97fff;
+  --white:   #ffffff;
+  --bg:      #fff8fe;
+  --card:    #ffffff;
+  --text:    #2d1f3d;
+  --muted:   #9b89b0;
+  --border:  #f0e6fa;
+  --r:       16px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  background-image:
+    radial-gradient(circle at 10% 20%, #ffe0f520 0%, transparent 50%),
+    radial-gradient(circle at 90% 80%, #d0f0ff20 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, #fff0b020 0%, transparent 60%);
+  font-family: 'Fredoka', 'Noto Sans Lao', sans-serif;
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── Confetti dots bg ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    radial-gradient(circle, #ff6eb430 2px, transparent 2px),
+    radial-gradient(circle, #5ee7b030 2px, transparent 2px),
+    radial-gradient(circle, #ffdd5730 2px, transparent 2px),
+    radial-gradient(circle, #5ec4ff30 2px, transparent 2px);
+  background-size: 60px 60px, 80px 80px, 50px 50px, 70px 70px;
+  background-position: 0 0, 30px 30px, 15px 45px, 45px 10px;
+}
+
+.wrap { max-width: 880px; margin: 0 auto; padding: 32px 20px 80px; position: relative; z-index: 1; }
+
+/* ── Hero header ── */
+.hero {
+  text-align: center;
+  padding: 40px 20px 32px;
+  position: relative;
+}
+.hero-emoji { font-size: 52px; display: block; margin-bottom: 8px; animation: bounce 2s ease-in-out infinite; }
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+
+.hero h1 {
+  font-size: 36px; font-weight: 700;
+  background: linear-gradient(135deg, var(--pink), var(--purple), var(--sky));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  line-height: 1.2; margin-bottom: 10px;
+}
+.slogan {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--yellow), var(--peach));
+  color: var(--text); font-size: 15px; font-weight: 600;
+  padding: 8px 22px; border-radius: 99px;
+  box-shadow: 0 4px 16px #ffdd5750;
+  margin-bottom: 20px;
+  animation: shimmer 3s ease-in-out infinite;
+}
+@keyframes shimmer { 0%,100%{box-shadow:0 4px 16px #ffdd5750} 50%{box-shadow:0 4px 28px #ff9a6c80} }
+
+/* ── Status pill ── */
+.status-row { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+.pill {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--white); border: 2px solid var(--border);
+  border-radius: 99px; padding: 6px 16px;
+  font-size: 12px; font-weight: 500; color: var(--muted);
+  box-shadow: 0 2px 8px #0000000a;
+}
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--mint); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
+
+/* ── Avatar row ── */
+.avatar-section { margin: 28px 0; }
+.avatar-section-title { text-align: center; font-size: 14px; color: var(--muted); font-weight: 500; margin-bottom: 16px; }
+.avatar-row { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+.avatar-slot {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  cursor: pointer; transition: transform .2s;
+}
+.avatar-slot:hover { transform: translateY(-4px); }
+.avatar-ring {
+  width: 72px; height: 72px; border-radius: 50%;
+  border: 3px dashed var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; background: var(--white);
+  box-shadow: 0 4px 16px #0000000d;
+  position: relative; overflow: hidden;
+  transition: border-color .2s, box-shadow .2s;
+}
+.avatar-slot:hover .avatar-ring {
+  border-color: var(--pink); border-style: solid;
+  box-shadow: 0 6px 20px #ff6eb430;
+}
+.avatar-ring img {
+  width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+  display: none;
+}
+.avatar-ring img.loaded { display: block; }
+.avatar-ring .placeholder { font-size: 28px; }
+.avatar-name { font-size: 11px; font-weight: 600; color: var(--muted); max-width: 72px; text-align: center; }
+.avatar-input { display: none; }
+
+/* add button */
+.avatar-add .avatar-ring {
+  background: linear-gradient(135deg, #fff0f8, #f0f8ff);
+  border-color: var(--pink2); border-style: solid;
+}
+.avatar-add-icon { font-size: 24px; color: var(--pink); }
+
+/* ── Latest card ── */
+.latest-card {
+  background: linear-gradient(135deg, #fff0fa, #f0f8ff, #f5fff8);
+  border: 2px solid var(--border);
+  border-radius: 24px; padding: 28px 32px;
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  flex-wrap: wrap; margin-bottom: 32px;
+  box-shadow: 0 8px 32px #ff6eb415;
+  animation: fadeUp .5s ease both;
+}
+.latest-meta { display: flex; flex-direction: column; gap: 4px; }
+.latest-label { font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; }
+.latest-round { font-size: 22px; font-weight: 700; color: var(--text); }
+.latest-date { font-size: 12px; color: var(--muted); }
+.digits { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.digit {
+  width: 52px; height: 62px;
+  background: var(--white);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; font-weight: 700; color: var(--text);
+  box-shadow: 0 4px 12px #0000000f, 0 0 0 2px var(--border);
+  transition: all .2s;
+}
+.digit:hover { transform: scale(1.08); box-shadow: 0 6px 20px #ff6eb425, 0 0 0 2px var(--pink2); color: var(--pink); }
+.digit-sep { font-size: 20px; color: var(--border); font-weight: 700; }
+
+/* ── Section cards ── */
+.sec-card {
+  background: var(--white); border: 2px solid var(--border);
+  border-radius: 20px; padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px #0000000a;
+  animation: fadeUp .5s ease both;
+}
+.sec-head { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+.sec-badge {
+  font-size: 13px; font-weight: 700; padding: 5px 14px; border-radius: 99px;
+  letter-spacing: .03em;
+}
+.badge-2t { background: linear-gradient(135deg, var(--pink), #ff95cb); color: #fff; box-shadow: 0 3px 10px #ff6eb440; }
+.badge-3t { background: linear-gradient(135deg, var(--mint), #3dd68c); color: #1a5c40; box-shadow: 0 3px 10px #5ee7b040; }
+.badge-4t { background: linear-gradient(135deg, var(--sky), #3ab0ff); color: #fff; box-shadow: 0 3px 10px #5ec4ff40; }
+.badge-pos { background: linear-gradient(135deg, var(--yellow), var(--peach)); color: var(--text); box-shadow: 0 3px 10px #ffdd5740; }
+.badge-sum { background: linear-gradient(135deg, var(--purple), #d4a0ff); color: #fff; box-shadow: 0 3px 10px #b97fff40; }
+.sec-title { font-size: 16px; font-weight: 700; color: var(--text); }
+.sec-latest { margin-left: auto; font-size: 12px; color: var(--muted); font-weight: 500;
+  background: var(--bg); padding: 4px 12px; border-radius: 99px; border: 1px solid var(--border); }
+
+/* ── Markov hint ── */
+.mk-hint {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  background: linear-gradient(135deg, #f0fff8, #e8f8ff);
+  border: 1.5px solid var(--mint2);
+  border-radius: 12px; padding: 10px 16px; margin-bottom: 16px;
+  font-size: 12px; font-weight: 500;
+}
+.mk-from { color: var(--text); font-weight: 700; background: var(--mint2); padding: 2px 10px; border-radius: 99px; }
+.mk-arrow { color: var(--muted); }
+.mk-to { color: #1a7a50; font-weight: 600; background: #d0f5e8; padding: 2px 10px; border-radius: 99px; }
+.mk-cnt { color: var(--muted); font-size: 11px; }
+
+/* ── Prediction table ── */
+.pred-list { display: flex; flex-direction: column; gap: 8px; }
+.pred-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px; border-radius: 12px;
+  background: var(--bg); border: 1.5px solid transparent;
+  transition: all .15s; cursor: default;
+}
+.pred-row:hover { border-color: var(--border); background: var(--white); transform: translateX(4px); }
+.pred-row.top1 { background: linear-gradient(135deg, #fff5f0, #fff0fa); border-color: var(--pink2); }
+.pred-row.top2 { background: linear-gradient(135deg, #fffbf0, #fff8e0); border-color: #ffd080; }
+.pred-row.top3 { background: linear-gradient(135deg, #f5fff8, #edfff5); border-color: var(--mint2); }
+.rank { font-size: 11px; font-weight: 700; color: var(--muted); width: 22px; flex-shrink: 0; }
+.rank.r1 { color: var(--pink); }
+.rank.r2 { color: var(--peach); }
+.rank.r3 { color: var(--mint); }
+.pred-num-val { font-size: 20px; font-weight: 700; color: var(--text); min-width: 56px; letter-spacing: .05em; }
+.pred-num-val.r1 { color: var(--pink); }
+.freq-tag {
+  font-size: 11px; font-weight: 600; padding: 2px 10px; border-radius: 99px;
+  background: var(--border); color: var(--muted);
+}
+.bar-wrap { flex: 1; }
+.bar-bg { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.bar-in { height: 100%; border-radius: 99px; transition: width .7s cubic-bezier(.4,0,.2,1); }
+.bar-2t { background: linear-gradient(90deg, var(--pink), var(--pink2)); }
+.bar-3t { background: linear-gradient(90deg, var(--mint), var(--mint2)); }
+.bar-4t { background: linear-gradient(90deg, var(--sky), var(--sky2)); }
+.score-tag { font-size: 11px; color: var(--muted); font-weight: 500; min-width: 48px; text-align: right; }
+
+/* ── Top chips ── */
+.chips-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; padding-top: 14px; border-top: 1.5px dashed var(--border); align-items: center; }
+.chips-label { font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: .08em; }
+.chip {
+  font-size: 14px; font-weight: 700; padding: 5px 16px; border-radius: 99px;
+  border: 2px solid var(--border); color: var(--text); background: var(--white);
+  cursor: default; transition: all .15s;
+}
+.chip:hover { transform: scale(1.05); }
+.chip.c1 { background: linear-gradient(135deg, var(--pink), #ff95cb); color: #fff; border-color: transparent; box-shadow: 0 3px 10px #ff6eb435; }
+.chip.c3t.c1 { background: linear-gradient(135deg, var(--mint), #3dd68c); color: #1a5c40; }
+.chip.c4t.c1 { background: linear-gradient(135deg, var(--sky), #3ab0ff); color: #fff; }
+
+/* ── Per position ── */
+.pos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+@media(max-width:500px){ .pos-grid { grid-template-columns: repeat(2, 1fr); } }
+.pos-card {
+  background: var(--bg); border: 1.5px solid var(--border);
+  border-radius: 14px; padding: 14px;
+  text-align: center;
+}
+.pos-card-label { font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 10px; }
+.pos-nums { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
+.pos-num {
+  width: 32px; height: 32px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700;
+  background: var(--white); border: 1.5px solid var(--border); color: var(--muted);
+}
+.pos-num.hi { background: linear-gradient(135deg, var(--yellow), var(--peach)); border-color: transparent; color: var(--text); box-shadow: 0 2px 8px #ffdd5740; }
+
+/* ── Summary ── */
+.sum-rows { display: flex; flex-direction: column; gap: 14px; }
+.sum-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.sum-label {
+  font-size: 12px; font-weight: 700; width: 52px; flex-shrink: 0;
+  padding: 4px 10px; border-radius: 99px; text-align: center;
+}
+.sum-2t { background: #ffe0f0; color: var(--pink); }
+.sum-3t { background: #d8fdf0; color: #1a7a50; }
+.sum-4t { background: #e0f4ff; color: #1a6090; }
+.sum-nums { display: flex; gap: 8px; flex-wrap: wrap; }
+.snum {
+  font-size: 16px; font-weight: 700; padding: 6px 16px; border-radius: 12px;
+  border: 2px solid var(--border); color: var(--text); background: var(--bg);
+  transition: all .15s;
+}
+.snum:hover { transform: scale(1.05); }
+.snum.s1 { background: linear-gradient(135deg, var(--pink), #ff95cb); color: #fff; border-color: transparent; box-shadow: 0 3px 12px #ff6eb440; }
+
+/* ── Loading / Error ── */
+.state-box {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 280px; gap: 16px; text-align: center;
+}
+.loader {
+  width: 48px; height: 48px; border-radius: 50%;
+  border: 4px solid var(--border); border-top-color: var(--pink);
+  animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loader-txt { font-size: 14px; color: var(--muted); font-weight: 500; }
+
+/* ── Footer ── */
+.footer {
+  margin-top: 40px; text-align: center; font-size: 12px; color: var(--muted);
+  padding-top: 24px; border-top: 2px dashed var(--border); font-weight: 500;
+}
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(16px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ── Hero avatar ── */
+.hero-avatar-wrap {
+  display: flex; justify-content: center; margin-bottom: 12px;
+}
+.hero-avatar-ring {
+  width: 120px; height: 120px; border-radius: 50%;
+  position: relative;
+  background: linear-gradient(135deg, var(--pink), var(--purple), var(--sky), var(--mint), var(--yellow));
+  padding: 4px;
+  box-shadow: 0 0 0 4px #fff, 0 0 0 7px var(--pink2), 0 8px 32px #ff6eb440;
+  animation: spin-ring 6s linear infinite;
+}
+@keyframes spin-ring {
+  0%   { box-shadow: 0 0 0 4px #fff, 0 0 0 7px var(--pink2),   0 8px 32px #ff6eb440; }
+  25%  { box-shadow: 0 0 0 4px #fff, 0 0 0 7px var(--sky2),    0 8px 32px #5ec4ff40; }
+  50%  { box-shadow: 0 0 0 4px #fff, 0 0 0 7px var(--mint2),   0 8px 32px #5ee7b040; }
+  75%  { box-shadow: 0 0 0 4px #fff, 0 0 0 7px var(--yellow2), 0 8px 32px #ffdd5740; }
+  100% { box-shadow: 0 0 0 4px #fff, 0 0 0 7px var(--pink2),   0 8px 32px #ff6eb440; }
+}
+.hero-avatar-img {
+  width: 100%; height: 100%; object-fit: cover;
+  border-radius: 50%;
+  background: transparent;
+  display: block;
+}
+
+/* ── Avatar ring upgrade ── */
+.avatar-ring {
+  background: linear-gradient(135deg, #fff8fe, #f0f8ff) !important;
+  border: none !important;
+  padding: 3px;
+  background-clip: padding-box;
+  box-shadow: 0 0 0 3px var(--pink2), 0 4px 16px #ff6eb420 !important;
+  transition: box-shadow .2s, transform .2s !important;
+}
+.avatar-slot:hover .avatar-ring {
+  box-shadow: 0 0 0 3px var(--pink), 0 6px 24px #ff6eb440 !important;
+}
+.avatar-ring img.loaded {
+  display: block !important;
+  object-fit: cover;
+  border-radius: 50%;
+  width: 100%; height: 100%;
+  background: transparent;
+}
+.avatar-ring .placeholder { display: none !important; }
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-avatar-wrap">
+      <div class="hero-avatar-ring">
+        <img class="hero-avatar-img" src="./pic/berd.png" alt="">
+    </div>
+    </div>
+    <h1 style="padding: 10px;">ຊື້ເລກເດີພີ່ນ້ອງເອີຍ</h1>
+    <div class="slogan">✨ ສິຊື້ຈົນກວ່າສິໄດ້ 10,000 ລ້ານ ✨</div>
+    <div class="status-row">
+      <div class="pill"><span class="dot" id="sDot"></span><span id="sTxt">ກຳລັງໂຫລດ...</span></div>
+    </div>
+  </div>
+
+  <!-- Avatars -->
+  <div class="avatar-section">
+    <div class="avatar-section-title">🧑‍🤝‍🧑 ທີມງານຊື້ເລກບໍ່ຖືກ</div>
+    <div class="avatar-row" id="avatarRow">
+      <!-- slots rendered by JS -->
+    </div>
+  </div>
+
+  <!-- Latest -->
+  <div class="latest-card" id="latestCard" style="display:none">
+    <div class="latest-meta">
+      <span class="latest-label">ງວດລ່າສຸດ</span>
+      <span class="latest-round" id="lRound">—</span>
+      <span class="latest-date" id="lDate">—</span>
+    </div>
+    <div class="digits" id="lDigits"></div>
+  </div>
+
+  <!-- Main -->
+  <div id="main">
+    <div class="state-box">
+      <div class="loader"></div>
+      <span class="loader-txt">ດຶງຂໍ້ມູນຈາກ API...</span>
+    </div>
+  </div>
+
+  <div class="footer" id="footer" style="display:none">
+    ⚠️ ຫວຍ = Random 100% · ໃຊ້ເປັນພຽງການວິເຄາະທາງສະຖິຕິ · ບໍ່ຖືກເຕະແຊນດີ້ 🙏
+  </div>
+
+</div>
+
+<script>
+
+
+const AVATARS = [
+    { name: "A", src: "./pic/A.png"},
+    { name: "Amy", src: "./pic/amy.png"},
+    { name: "Sandy", src: "./pic/sandy.png"},
+    { name: "Den", src: "./pic/den.png"},
+    { name: "Ning", src: "./pic/ning.png"},
+    { name: "Jim", src: "./pic/jim.png"},
+    // { name: "Berd", src: "./berd.png"},
+]
+
+
+function buildAvatars() {
+  const row = document.getElementById('avatarRow');
+  AVATARS.forEach((s, i) => {
+    const slot = document.createElement('div');
+    slot.className = 'avatar-slot';
+    slot.innerHTML = `
+      <div class="avatar-ring" id="ring${i}">
+        <img id="img${i}" src="${s.src}" alt="${s.name}" class="loaded">
+      </div>
+      <span class="avatar-name" id="aname${i}" contenteditable="true" spellcheck="false">${s.name}</span>
+     <input type="file" class="avatar-input"   id="file${i}" disabled accept="image/*">
+    `;
+    row.appendChild(slot);
+    slot.querySelector('.avatar-ring').addEventListener('click', () => {
+      document.getElementById(`file${i}`).click();
+    });
+    document.getElementById(`file${i}`).addEventListener('change', e => {
+      const f = e.target.files[0]; if (!f) return;
+      const url = URL.createObjectURL(f);
+      const img = document.getElementById(`img${i}`);
+      img.src = url;
+      img.classList.add('loaded');
+    });
+  });
+}
+buildAvatars();
+
+// ── API ───────────────────────────────────────────────────
+const API = 'https://inseehub.com/api/website/laolot/WinPrizeHistory?type=1';
+
+async function loadData() {
+  const res  = await fetch(API);
+  const json = await res.json();
+  if (json.status !== 200 || json.error) throw new Error(json.msg || 'API error');
+  return json.resultData
+    .filter(d => d.winNumber && d.winNumber.length === 6)
+    .map(d => ({ round: parseInt(d.roundNumber), date: d.roundDate.slice(0,10), win: d.winNumber }))
+    .sort((a,b) => a.date.localeCompare(b.date));
+}
+
+// ── Stats ─────────────────────────────────────────────────
+function count(arr) { const c={}; arr.forEach(v=>c[v]=(c[v]||0)+1); return c; }
+
+function predict(tails) {
+  const total=tails.length, freq=count(tails);
+  const fs=Object.fromEntries(Object.entries(freq).map(([k,v])=>[k,v/total]));
+  const rs={};
+  [...tails].reverse().forEach((v,i)=>rs[v]=(rs[v]||0)+1/(i+1));
+  const ms={}, last=tails[tails.length-1];
+  for(let i=0;i<tails.length-1;i++) if(tails[i]===last) ms[tails[i+1]]=(ms[tails[i+1]]||0)+1;
+  const norm=d=>{const s=Object.values(d).reduce((a,b)=>a+b,0);return s>0?Object.fromEntries(Object.entries(d).map(([k,v])=>[k,v/s])):d;};
+  const fn=norm(fs),rn=norm(rs),mn=norm(ms);
+  const keys=new Set([...Object.keys(fn),...Object.keys(rn),...Object.keys(mn)]);
+  return [...keys].map(k=>[k,.30*(fn[k]||0)+.40*(rn[k]||0)+.30*(mn[k]||0)]).sort((a,b)=>b[1]-a[1]);
+}
+
+function getMarkov(tails) {
+  const last=tails[tails.length-1],nexts={};
+  for(let i=0;i<tails.length-1;i++) if(tails[i]===last) nexts[tails[i+1]]=(nexts[tails[i+1]]||0)+1;
+  return Object.entries(nexts).sort((a,b)=>b[1]-a[1]).slice(0,3);
+}
+
+// ── Render helpers ────────────────────────────────────────
+function mkHint(mk, lastVal) {
+  if (!mk.length) return `<div class="mk-hint"><span class="mk-from">'${lastVal}'</span><span class="mk-arrow">→</span><span style="color:var(--muted)">ຂໍ້ມູນໜ້ອຍ</span></div>`;
+  const items = mk.map(([n,c])=>`<span class="mk-to">'${n}'</span><span class="mk-cnt">(${c}ຄ.)</span>`).join('<span class="mk-arrow"> · </span>');
+  return `<div class="mk-hint">🔄 <span class="mk-from">'${lastVal}'</span><span class="mk-arrow">→</span>${items}</div>`;
+}
+
+function predRows(results, barClass, data) {
+  const max = results[0]?.[1]||1;
+  return results.slice(0,8).map(([num,sc],i) => {
+    const cnt = count(data)[num]||0;
+    const pct = (sc/max*100).toFixed(0);
+    const rowCls = i===0?'top1':i===1?'top2':i===2?'top3':'';
+    const rankCls = i===0?'r1':i===1?'r2':i===2?'r3':'';
+    return `<div class="pred-row ${rowCls}">
+      <span class="rank ${rankCls}">${i+1}</span>
+      <span class="pred-num-val ${rankCls}">${num}</span>
+      <span class="freq-tag">${cnt}ຄ.</span>
+      <div class="bar-wrap"><div class="bar-bg"><div class="bar-in ${barClass}" style="width:${pct}%"></div></div></div>
+      <span class="score-tag">${sc.toFixed(3)}</span>
+    </div>`;
+  }).join('');
+}
+
+function chipsHTML(results, cls) {
+  return `<span class="chips-label">🏆 Top 5</span>` +
+    results.slice(0,5).map(([n],i)=>`<span class="chip ${cls} ${i===0?'c1':''}">${n}</span>`).join('');
+}
+
+// ── Render ────────────────────────────────────────────────
+function render(rows) {
+  const latest  = rows[rows.length-1];
+  const t2=rows.map(r=>r.win.slice(-2)), t3=rows.map(r=>r.win.slice(-3)), t4=rows.map(r=>r.win.slice(-4));
+  const top2=predict(t2), top3=predict(t3), top4=predict(t4);
+  const l2=latest.win.slice(-2), l3=latest.win.slice(-3), l4=latest.win.slice(-4);
+
+  // per-position
+  const posData=[1,2,3,4,5,6].map(p=>{
+    const vals=rows.map(r=>r.win[p-1]);
+    return { p, top:Object.entries(count(vals)).sort((a,b)=>b[1]-a[1]).slice(0,5) };
+  });
+
+  // latest
+  document.getElementById('lRound').textContent = `ງວດທີ ${latest.round}`;
+  document.getElementById('lDate').textContent  = latest.date;
+  document.getElementById('lDigits').innerHTML  = latest.win.split('').map((d,i)=>
+    `${i===2||i===4?'<span class="digit-sep">·</span>':''}<div class="digit">${d}</div>`
+  ).join('');
+  document.getElementById('latestCard').style.display='flex';
+  document.getElementById('sDot').style.background='var(--mint)';
+  document.getElementById('sTxt').textContent=`${rows.length} ງວດ · ສົດ`;
+
+  document.getElementById('main').innerHTML = `
+
+    <!-- 2T -->
+    <div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge badge-2t">2 ຕົວ</span>
+        <span class="sec-title">ທ້າຍ 2 ຕົວ</span>
+        <span class="sec-latest">ລ່າສຸດ: ${l2}</span>
+      </div>
+      <div class="pred-list">${predRows(top2,'bar-2t',t2)}</div>
+      <div class="chips-row">${chipsHTML(top2,'')}</div>
+    </div>
+
+    <!-- 3T -->
+    <div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge badge-3t">3 ຕົວ</span>
+        <span class="sec-title">ທ້າຍ 3 ຕົວ</span>
+        <span class="sec-latest">ລ່າສຸດ: ${l3}</span>
+      </div>
+      ${mkHint(getMarkov(t3), l3)}
+      <div class="pred-list">${predRows(top3,'bar-3t',t3)}</div>
+      <div class="chips-row">${chipsHTML(top3,'c3t')}</div>
+    </div>
+
+    <!-- 4T -->
+    <div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge badge-4t">4 ຕົວ</span>
+        <span class="sec-title">ທ້າຍ 4 ຕົວ</span>
+        <span class="sec-latest">ລ່າສຸດ: ${l4}</span>
+      </div>
+      ${mkHint(getMarkov(t4), l4)}
+      <div class="pred-list">${predRows(top4,'bar-4t',t4)}</div>
+      <div class="chips-row">${chipsHTML(top4,'c4t')}</div>
+    </div>
+
+    <!-- Per position -->
+    <div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge badge-pos">ຕຳແໜ່ງ</span>
+        <span class="sec-title">ຄວາມຖີ່ຕໍ່ຕຳແໜ່ງ</span>
+      </div>
+      <div class="pos-grid">
+        ${posData.map(({p,top})=>`
+          <div class="pos-card">
+            <div class="pos-card-label">ຕຳ ${p}</div>
+            <div class="pos-nums">
+              ${top.map(([d,c],i)=>`<div class="pos-num ${i===0?'hi':''}" title="${c}ຄ.">${d}</div>`).join('')}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge badge-sum">🏆 ສະຫຼຸບ</span>
+        <span class="sec-title">ທຳນາຍງວດທີ ${latest.round+1}</span>
+      </div>
+      <div class="sum-rows">
+        <div class="sum-row">
+          <span class="sum-label sum-2t">2T</span>
+          <div class="sum-nums">${top2.slice(0,5).map(([n],i)=>`<span class="snum ${i===0?'s1':''}">${n}</span>`).join('')}</div>
+        </div>
+        <div class="sum-row">
+          <span class="sum-label sum-3t">3T</span>
+          <div class="sum-nums">${top3.slice(0,5).map(([n],i)=>`<span class="snum ${i===0?'s1':''}">${n}</span>`).join('')}</div>
+        </div>
+        <div class="sum-row">
+          <span class="sum-label sum-4t">4T</span>
+          <div class="sum-nums">${top4.slice(0,5).map(([n],i)=>`<span class="snum ${i===0?'s1':''}">${n}</span>`).join('')}</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('footer').style.display='block';
+}
+
+function showError(msg) {
+  document.getElementById('sDot').style.background='#ff6b6b';
+  document.getElementById('sTxt').textContent='ດຶງຂໍ້ມູນບໍ່ສຳເລັດ';
+  document.getElementById('main').innerHTML=`
+    <div class="state-box">
+      <div style="font-size:40px">😢</div>
+      <div style="font-size:14px;color:#e06b7a;font-weight:600">${msg}</div>
+    </div>`;
+}
+
+loadData().then(render).catch(e=>showError(e.message));
+</script>
+</body>
+</html>

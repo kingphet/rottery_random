@@ -3,618 +3,1193 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ຊື້ເລກເດີພີ່ນ້ອງເອີຍ</title>
+<title>ລະບົບວິເຄາະຫວຍລາວ | LAO LOTTERY AI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Noto+Sans+Lao:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&family=Noto+Sans+Lao:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --pink:    #ff6eb4;
-  --pink2:   #ffb3d9;
-  --yellow:  #ffdd57;
-  --yellow2: #fff3a3;
-  --mint:    #5ee7b0;
-  --mint2:   #b8f5db;
-  --sky:     #5ec4ff;
-  --sky2:    #bde8ff;
-  --peach:   #ff9a6c;
-  --purple:  #b97fff;
-  --white:   #ffffff;
-  --bg:      #fff8fe;
-  --card:    #ffffff;
-  --text:    #2d1f3d;
-  --muted:   #9b89b0;
-  --border:  #f0e6fa;
-  --r:       16px;
-}
+  :root {
+    --bg:       #0a0c14;
+    --bg2:      #111422;
+    --bg3:      #1a1f33;
+    --border:   #2a2f4a;
+    --gold:     #f5c842;
+    --gold2:    #e8a820;
+    --teal:     #29d4b8;
+    --red:      #ff4d6d;
+    --blue:     #4d9fff;
+    --green:    #3ddc84;
+    --muted:    #6b7299;
+    --text:     #dde3ff;
+    --text2:    #a0a8cc;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Chakra Petch', 'Noto Sans Lao', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  /* BACKGROUND GRID */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(41,212,184,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(41,212,184,.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
 
-body {
-  background: var(--bg);
-  background-image:
-    radial-gradient(circle at 10% 20%, #ffe0f520 0%, transparent 50%),
-    radial-gradient(circle at 90% 80%, #d0f0ff20 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, #fff0b020 0%, transparent 60%);
-  font-family: 'Fredoka', 'Noto Sans Lao', sans-serif;
-  color: var(--text);
-  min-height: 100vh;
-}
+  .wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 20px 60px; }
 
-/* ── Confetti dots bg ── */
-body::before {
-  content: '';
-  position: fixed; inset: 0; pointer-events: none; z-index: 0;
-  background-image:
-    radial-gradient(circle, #ff6eb430 2px, transparent 2px),
-    radial-gradient(circle, #5ee7b030 2px, transparent 2px),
-    radial-gradient(circle, #ffdd5730 2px, transparent 2px),
-    radial-gradient(circle, #5ec4ff30 2px, transparent 2px);
-  background-size: 60px 60px, 80px 80px, 50px 50px, 70px 70px;
-  background-position: 0 0, 30px 30px, 15px 45px, 45px 10px;
-}
+  /* HEADER */
+  header {
+    text-align: center;
+    padding: 48px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+  .logo-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    color: #0a0c14;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    padding: 4px 14px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  header h1 {
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    color: #fff;
+  }
+  header h1 span { color: var(--gold); }
+  .meta-row {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--muted);
+    flex-wrap: wrap;
+  }
+  .meta-row b { color: var(--text2); }
 
-.wrap { max-width: 880px; margin: 0 auto; padding: 32px 20px 80px; position: relative; z-index: 1; }
+  /* MASTER SUMMARY HERO */
+  .hero {
+    background: linear-gradient(135deg, #111830 0%, #0f1525 50%, #0d1420 100%);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 240px; height: 240px;
+    background: radial-gradient(circle, rgba(245,200,66,.08), transparent 70%);
+    pointer-events: none;
+  }
+  .hero-title {
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 0.7fr;
+    gap: 16px;
+  }
+  @media(max-width: 700px) { .hero-grid { grid-template-columns: 1fr 1fr; } }
+  .pred-card {
+    background: rgba(255,255,255,.03);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: border-color .2s;
+  }
+  .pred-card:hover { border-color: var(--gold); }
+  .pred-card.main {
+    background: linear-gradient(135deg, rgba(245,200,66,.08), rgba(245,200,66,.02));
+    border-color: rgba(245,200,66,.4);
+  }
+  .pred-label { font-size: 10px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; }
+  .pred-number {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    letter-spacing: 6px;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 8px;
+  }
+  .pred-card:not(.main) .pred-number { font-size: clamp(22px, 3vw, 34px); color: var(--teal); letter-spacing: 4px; }
+  .conf-bar-wrap { height: 4px; background: rgba(255,255,255,.06); border-radius: 2px; overflow: hidden; }
+  .conf-bar { height: 100%; background: linear-gradient(90deg, var(--gold2), var(--gold)); border-radius: 2px; transition: width .8s ease; }
+  .conf-text { font-size: 11px; color: var(--text2); margin-top: 6px; }
 
-/* ── Hero header ── */
-.hero {
-  text-align: center;
-  padding: 40px 20px 32px;
-  position: relative;
-}
-.hero-emoji { font-size: 52px; display: block; margin-bottom: 8px; animation: bounce 2s ease-in-out infinite; }
-@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  /* SECTION */
+  .section { margin-bottom: 28px; }
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-icon {
+    width: 32px; height: 32px;
+    background: rgba(41,212,184,.1);
+    border: 1px solid rgba(41,212,184,.25);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+  .section-head h2 { font-size: 15px; font-weight: 600; color: var(--text); }
+  .section-head span { font-size: 11px; color: var(--muted); margin-left: auto; }
 
-.hero h1 {
-  font-size: 36px; font-weight: 700;
-  background: linear-gradient(135deg, var(--pink), var(--purple), var(--sky));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  line-height: 1.2; margin-bottom: 10px;
-}
-.slogan {
-  display: inline-block;
-  background: linear-gradient(135deg, var(--yellow), var(--peach));
-  color: var(--text); font-size: 15px; font-weight: 600;
-  padding: 8px 22px; border-radius: 99px;
-  box-shadow: 0 4px 16px #ffdd5750;
-  margin-bottom: 20px;
-  animation: shimmer 3s ease-in-out infinite;
-}
-@keyframes shimmer { 0%,100%{box-shadow:0 4px 16px #ffdd5750} 50%{box-shadow:0 4px 28px #ff9a6c80} }
+  /* TWO-COL */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media(max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  @media(max-width: 800px) { .three-col { grid-template-columns: 1fr 1fr; } }
+  @media(max-width: 480px) { .three-col { grid-template-columns: 1fr; } }
 
-/* ── Status pill ── */
-.status-row { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
-.pill {
-  display: flex; align-items: center; gap: 6px;
-  background: var(--white); border: 2px solid var(--border);
-  border-radius: 99px; padding: 6px 16px;
-  font-size: 12px; font-weight: 500; color: var(--muted);
-  box-shadow: 0 2px 8px #0000000a;
-}
-.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--mint); animation: pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
+  /* CARD */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .card h3 { font-size: 12px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 14px; }
 
-/* ── Avatar row ── */
-.avatar-section { margin: 28px 0; }
-.avatar-section-title { text-align: center; font-size: 14px; color: var(--muted); font-weight: 500; margin-bottom: 16px; }
-.avatar-row { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
-.avatar-slot {
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  cursor: pointer; transition: transform .2s;
-}
-.avatar-slot:hover { transform: translateY(-4px); }
-.avatar-ring {
-  width: 72px; height: 72px; border-radius: 50%;
-  border: 3px dashed var(--border);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 28px; background: var(--white);
-  box-shadow: 0 4px 16px #0000000d;
-  position: relative; overflow: hidden;
-  transition: border-color .2s, box-shadow .2s;
-}
-.avatar-slot:hover .avatar-ring {
-  border-color: var(--pink); border-style: solid;
-  box-shadow: 0 6px 20px #ff6eb430;
-}
-.avatar-ring img {
-  width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
-  display: none;
-}
-.avatar-ring img.loaded { display: block; }
-.avatar-ring .placeholder { font-size: 28px; }
-.avatar-name { font-size: 11px; font-weight: 600; color: var(--muted); max-width: 72px; text-align: center; }
-.avatar-input { display: none; }
+  /* FREQUENCY TABLE */
+  .freq-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+  @media(max-width: 500px) { .freq-grid { grid-template-columns: repeat(5, 1fr); } }
+  .freq-cell {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 6px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform .15s;
+  }
+  .freq-cell:hover { transform: translateY(-2px); }
+  .freq-cell.hot { border-color: rgba(255,77,109,.4); background: rgba(255,77,109,.07); }
+  .freq-cell.cold { border-color: rgba(77,159,255,.3); background: rgba(77,159,255,.05); }
+  .freq-cell .d { font-size: 22px; font-weight: 700; color: #fff; line-height: 1; }
+  .freq-cell.hot .d { color: var(--red); }
+  .freq-cell.cold .d { color: var(--blue); }
+  .freq-cell .pct { font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .freq-cell .bar-bg { height: 3px; background: var(--border); border-radius: 2px; margin-top: 6px; overflow: hidden; }
+  .freq-cell .bar-fill { height: 100%; background: var(--teal); border-radius: 2px; transition: width .6s; }
+  .freq-cell.hot .bar-fill { background: var(--red); }
+  .freq-cell.cold .bar-fill { background: var(--blue); }
+  .badge { font-size: 9px; letter-spacing: 1px; padding: 1px 5px; border-radius: 3px; }
+  .badge-hot { background: rgba(255,77,109,.2); color: var(--red); }
+  .badge-cold { background: rgba(77,159,255,.15); color: var(--blue); }
+  .badge-norm { background: rgba(61,220,132,.12); color: var(--green); }
 
-/* add button */
-.avatar-add .avatar-ring {
-  background: linear-gradient(135deg, #fff0f8, #f0f8ff);
-  border-color: var(--pink2); border-style: solid;
-}
-.avatar-add-icon { font-size: 24px; color: var(--pink); }
+  /* DUE TABLE */
+  .due-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+  }
+  .due-row:last-child { border-bottom: none; }
+  .due-digit {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .due-bar-wrap { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .due-bar-fill { height: 100%; background: linear-gradient(90deg, var(--teal), var(--blue)); border-radius: 3px; }
+  .due-gap { font-size: 12px; color: var(--muted); min-width: 50px; text-align: right; }
 
-/* ── Latest card ── */
-.latest-card {
-  background: linear-gradient(135deg, #fff0fa, #f0f8ff, #f5fff8);
-  border: 2px solid var(--border);
-  border-radius: 24px; padding: 28px 32px;
-  display: flex; align-items: center; justify-content: space-between; gap: 20px;
-  flex-wrap: wrap; margin-bottom: 32px;
-  box-shadow: 0 8px 32px #ff6eb415;
-  animation: fadeUp .5s ease both;
-}
-.latest-meta { display: flex; flex-direction: column; gap: 4px; }
-.latest-label { font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; }
-.latest-round { font-size: 22px; font-weight: 700; color: var(--text); }
-.latest-date { font-size: 12px; color: var(--muted); }
-.digits { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
-.digit {
-  width: 52px; height: 62px;
-  background: var(--white);
-  border-radius: 14px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 26px; font-weight: 700; color: var(--text);
-  box-shadow: 0 4px 12px #0000000f, 0 0 0 2px var(--border);
-  transition: all .2s;
-}
-.digit:hover { transform: scale(1.08); box-shadow: 0 6px 20px #ff6eb425, 0 0 0 2px var(--pink2); color: var(--pink); }
-.digit-sep { font-size: 20px; color: var(--border); font-weight: 700; }
+  /* POSITION GRID */
+  .pos-grid { display: flex; flex-direction: column; gap: 10px; }
+  .pos-row { display: flex; align-items: center; gap: 10px; }
+  .pos-label { font-size: 11px; color: var(--muted); width: 56px; flex-shrink: 0; }
+  .pos-chips { display: flex; gap: 6px; }
+  .chip {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text2);
+  }
+  .chip.rank1 { border-color: rgba(245,200,66,.5); color: var(--gold); background: rgba(245,200,66,.08); }
+  .chip.rank2 { border-color: rgba(41,212,184,.35); color: var(--teal); }
 
-/* ── Section cards ── */
-.sec-card {
-  background: var(--white); border: 2px solid var(--border);
-  border-radius: 20px; padding: 24px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 20px #0000000a;
-  animation: fadeUp .5s ease both;
-}
-.sec-head { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-.sec-badge {
-  font-size: 13px; font-weight: 700; padding: 5px 14px; border-radius: 99px;
-  letter-spacing: .03em;
-}
-.badge-2t { background: linear-gradient(135deg, var(--pink), #ff95cb); color: #fff; box-shadow: 0 3px 10px #ff6eb440; }
-.badge-3t { background: linear-gradient(135deg, var(--mint), #3dd68c); color: #1a5c40; box-shadow: 0 3px 10px #5ee7b040; }
-.badge-4t { background: linear-gradient(135deg, var(--sky), #3ab0ff); color: #fff; box-shadow: 0 3px 10px #5ec4ff40; }
-.badge-pos { background: linear-gradient(135deg, var(--yellow), var(--peach)); color: var(--text); box-shadow: 0 3px 10px #ffdd5740; }
-.badge-sum { background: linear-gradient(135deg, var(--purple), #d4a0ff); color: #fff; box-shadow: 0 3px 10px #b97fff40; }
-.sec-title { font-size: 16px; font-weight: 700; color: var(--text); }
-.sec-latest { margin-left: auto; font-size: 12px; color: var(--muted); font-weight: 500;
-  background: var(--bg); padding: 4px 12px; border-radius: 99px; border: 1px solid var(--border); }
+  /* LAST2 */
+  .pair-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  .pair-cell {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+  }
+  .pair-cell .pn { font-size: 20px; font-weight: 700; color: var(--teal); letter-spacing: 2px; }
+  .pair-cell .pc { font-size: 11px; color: var(--muted); margin-top: 3px; }
 
-/* ── Markov hint ── */
-.mk-hint {
-  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-  background: linear-gradient(135deg, #f0fff8, #e8f8ff);
-  border: 1.5px solid var(--mint2);
-  border-radius: 12px; padding: 10px 16px; margin-bottom: 16px;
-  font-size: 12px; font-weight: 500;
-}
-.mk-from { color: var(--text); font-weight: 700; background: var(--mint2); padding: 2px 10px; border-radius: 99px; }
-.mk-arrow { color: var(--muted); }
-.mk-to { color: #1a7a50; font-weight: 600; background: #d0f5e8; padding: 2px 10px; border-radius: 99px; }
-.mk-cnt { color: var(--muted); font-size: 11px; }
+  /* COMBO TABLE */
+  .combo-table { width: 100%; border-collapse: collapse; }
+  .combo-table th {
+    font-size: 10px; letter-spacing: 2px; color: var(--muted);
+    text-transform: uppercase; padding: 6px 10px; text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .combo-table td { padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,.03); font-size: 14px; }
+  .combo-table td:first-child { font-weight: 700; letter-spacing: 2px; color: var(--gold); }
+  .combo-table tr:hover td { background: rgba(255,255,255,.02); }
+  .rank-badge {
+    display: inline-block;
+    width: 20px; height: 20px;
+    border-radius: 4px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    text-align: center;
+    line-height: 20px;
+    font-size: 10px;
+    color: var(--muted);
+    margin-right: 6px;
+  }
 
-/* ── Prediction table ── */
-.pred-list { display: flex; flex-direction: column; gap: 8px; }
-.pred-row {
-  display: flex; align-items: center; gap: 12px;
-  padding: 10px 14px; border-radius: 12px;
-  background: var(--bg); border: 1.5px solid transparent;
-  transition: all .15s; cursor: default;
-}
-.pred-row:hover { border-color: var(--border); background: var(--white); transform: translateX(4px); }
-.pred-row.top1 { background: linear-gradient(135deg, #fff5f0, #fff0fa); border-color: var(--pink2); }
-.pred-row.top2 { background: linear-gradient(135deg, #fffbf0, #fff8e0); border-color: #ffd080; }
-.pred-row.top3 { background: linear-gradient(135deg, #f5fff8, #edfff5); border-color: var(--mint2); }
-.rank { font-size: 11px; font-weight: 700; color: var(--muted); width: 22px; flex-shrink: 0; }
-.rank.r1 { color: var(--pink); }
-.rank.r2 { color: var(--peach); }
-.rank.r3 { color: var(--mint); }
-.pred-num-val { font-size: 20px; font-weight: 700; color: var(--text); min-width: 56px; letter-spacing: .05em; }
-.pred-num-val.r1 { color: var(--pink); }
-.freq-tag {
-  font-size: 11px; font-weight: 600; padding: 2px 10px; border-radius: 99px;
-  background: var(--border); color: var(--muted);
-}
-.bar-wrap { flex: 1; }
-.bar-bg { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
-.bar-in { height: 100%; border-radius: 99px; transition: width .7s cubic-bezier(.4,0,.2,1); }
-.bar-2t { background: linear-gradient(90deg, var(--pink), var(--pink2)); }
-.bar-3t { background: linear-gradient(90deg, var(--mint), var(--mint2)); }
-.bar-4t { background: linear-gradient(90deg, var(--sky), var(--sky2)); }
-.score-tag { font-size: 11px; color: var(--muted); font-weight: 500; min-width: 48px; text-align: right; }
+  /* HISTORY TABLE */
+  .hist-table { width: 100%; border-collapse: collapse; }
+  .hist-table th {
+    font-size: 10px; letter-spacing: 2px; color: var(--muted);
+    text-transform: uppercase; padding: 8px 12px; text-align: left;
+    background: var(--bg3);
+  }
+  .hist-table td { padding: 9px 12px; border-bottom: 1px solid rgba(255,255,255,.04); font-size: 13px; }
+  .hist-table tr:first-child td { background: rgba(245,200,66,.05); }
+  .hist-num {
+    font-size: 18px; font-weight: 700; letter-spacing: 4px;
+    color: #fff;
+    display: inline-flex; gap: 3px;
+  }
+  .hist-num .dn { color: var(--text2); }
+  .hist-num .dn.h { color: var(--red); }
+  .hist-round { color: var(--muted); font-size: 12px; }
 
-/* ── Top chips ── */
-.chips-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; padding-top: 14px; border-top: 1.5px dashed var(--border); align-items: center; }
-.chips-label { font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: .08em; }
-.chip {
-  font-size: 14px; font-weight: 700; padding: 5px 16px; border-radius: 99px;
-  border: 2px solid var(--border); color: var(--text); background: var(--white);
-  cursor: default; transition: all .15s;
-}
-.chip:hover { transform: scale(1.05); }
-.chip.c1 { background: linear-gradient(135deg, var(--pink), #ff95cb); color: #fff; border-color: transparent; box-shadow: 0 3px 10px #ff6eb435; }
-.chip.c3t.c1 { background: linear-gradient(135deg, var(--mint), #3dd68c); color: #1a5c40; }
-.chip.c4t.c1 { background: linear-gradient(135deg, var(--sky), #3ab0ff); color: #fff; }
+  /* ALT SECTION */
+  .alt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media(max-width: 480px) { .alt-grid { grid-template-columns: 1fr; } }
+  .alt-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .alt-method { font-size: 11px; color: var(--muted); }
+  .alt-number { font-size: 22px; font-weight: 700; letter-spacing: 4px; color: var(--teal); }
 
-/* ── Per position ── */
-.pos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-@media(max-width:500px){ .pos-grid { grid-template-columns: repeat(2, 1fr); } }
-.pos-card {
-  background: var(--bg); border: 1.5px solid var(--border);
-  border-radius: 14px; padding: 14px;
-  text-align: center;
-}
-.pos-card-label { font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 10px; }
-.pos-nums { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
-.pos-num {
-  width: 32px; height: 32px; border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 14px; font-weight: 700;
-  background: var(--white); border: 1.5px solid var(--border); color: var(--muted);
-}
-.pos-num.hi { background: linear-gradient(135deg, var(--yellow), var(--peach)); border-color: transparent; color: var(--text); box-shadow: 0 2px 8px #ffdd5740; }
+  /* MARKOV */
+  .markov-list { display: flex; flex-direction: column; gap: 8px; }
+  .markov-row { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+  .markov-arrow { color: var(--muted); }
+  .markov-combo { font-weight: 700; color: var(--gold); letter-spacing: 2px; }
+  .markov-cnt { font-size: 11px; color: var(--muted); margin-left: auto; }
 
-/* ── Summary ── */
-.sum-rows { display: flex; flex-direction: column; gap: 14px; }
-.sum-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-.sum-label {
-  font-size: 12px; font-weight: 700; width: 52px; flex-shrink: 0;
-  padding: 4px 10px; border-radius: 99px; text-align: center;
-}
-.sum-2t { background: #ffe0f0; color: var(--pink); }
-.sum-3t { background: #d8fdf0; color: #1a7a50; }
-.sum-4t { background: #e0f4ff; color: #1a6090; }
-.sum-nums { display: flex; gap: 8px; flex-wrap: wrap; }
-.snum {
-  font-size: 16px; font-weight: 700; padding: 6px 16px; border-radius: 12px;
-  border: 2px solid var(--border); color: var(--text); background: var(--bg);
-  transition: all .15s;
-}
-.snum:hover { transform: scale(1.05); }
-.snum.s1 { background: linear-gradient(135deg, var(--pink), #ff95cb); color: #fff; border-color: transparent; box-shadow: 0 3px 12px #ff6eb440; }
+  /* DISCLAIMER */
+  .disclaimer {
+    background: rgba(255,77,109,.05);
+    border: 1px solid rgba(255,77,109,.2);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-top: 40px;
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.7;
+  }
+  .disclaimer strong { color: var(--red); }
 
-/* ── Loading / Error ── */
-.state-box {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  min-height: 280px; gap: 16px; text-align: center;
-}
-.loader {
-  width: 48px; height: 48px; border-radius: 50%;
-  border: 4px solid var(--border); border-top-color: var(--pink);
-  animation: spin .7s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.loader-txt { font-size: 14px; color: var(--muted); font-weight: 500; }
-
-/* ── Footer ── */
-.footer {
-  margin-top: 40px; text-align: center; font-size: 12px; color: var(--muted);
-  padding-top: 24px; border-top: 2px dashed var(--border); font-weight: 500;
-}
-
-@keyframes fadeUp {
-  from { opacity:0; transform:translateY(16px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-
-/* ── Hero avatar ── */
-.hero-avatar-wrap {
-  display: flex; justify-content: center; margin-bottom: 12px;
-}
-.hero-avatar-ring {
-  width: 120px; height: 120px; border-radius: 50%;
-  position: relative;
-  background: linear-gradient(135deg, var(--pink), var(--purple), var(--sky), var(--mint), var(--yellow));
-  padding: 4px;
-  box-shadow: 0 0 0 4px #fff, 0 0 0 7px var(--pink2), 0 8px 32px #ff6eb440;
-  animation: spin-ring 6s linear infinite;
-}
-@keyframes spin-ring {
-  0%   { box-shadow: 0 0 0 4px #fff, 0 0 0 7px var(--pink2),   0 8px 32px #ff6eb440; }
-  25%  { box-shadow: 0 0 0 4px #fff, 0 0 0 7px var(--sky2),    0 8px 32px #5ec4ff40; }
-  50%  { box-shadow: 0 0 0 4px #fff, 0 0 0 7px var(--mint2),   0 8px 32px #5ee7b040; }
-  75%  { box-shadow: 0 0 0 4px #fff, 0 0 0 7px var(--yellow2), 0 8px 32px #ffdd5740; }
-  100% { box-shadow: 0 0 0 4px #fff, 0 0 0 7px var(--pink2),   0 8px 32px #ff6eb440; }
-}
-.hero-avatar-img {
-  width: 100%; height: 100%; object-fit: cover;
-  border-radius: 50%;
-  background: transparent;
-  display: block;
-}
-
-/* ── Avatar ring upgrade ── */
-.avatar-ring {
-  background: linear-gradient(135deg, #fff8fe, #f0f8ff) !important;
-  border: none !important;
-  padding: 3px;
-  background-clip: padding-box;
-  box-shadow: 0 0 0 3px var(--pink2), 0 4px 16px #ff6eb420 !important;
-  transition: box-shadow .2s, transform .2s !important;
-}
-.avatar-slot:hover .avatar-ring {
-  box-shadow: 0 0 0 3px var(--pink), 0 6px 24px #ff6eb440 !important;
-}
-.avatar-ring img.loaded {
-  display: block !important;
-  object-fit: cover;
-  border-radius: 50%;
-  width: 100%; height: 100%;
-  background: transparent;
-}
-.avatar-ring .placeholder { display: none !important; }
-
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero, .section { animation: fadeUp .5s ease both; }
+  .section:nth-child(2) { animation-delay: .05s; }
+  .section:nth-child(3) { animation-delay: .1s; }
+  .section:nth-child(4) { animation-delay: .15s; }
+  .section:nth-child(5) { animation-delay: .2s; }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <!-- Hero -->
-  <div class="hero">
-    <div class="hero-avatar-wrap">
-      <div class="hero-avatar-ring">
-        <img class="hero-avatar-img" src="./pic/berd.png" alt="">
+<!-- HEADER -->
+<header>
+  <div class="logo-badge">AI Statistical Analysis</div>
+  <h1>ລະບົບວິເຄາະ<span>ຫວຍລາວ</span></h1>
+  <div class="meta-row">
+    <span>📊 <b id="totalRounds"></b> ງວດ</span>
+    <span>📅 <b id="dateRange"></b></span>
+    <span>🔢 ງວດລ່າສຸດ #<b id="latestRound"></b>: <b id="latestNumber"></b></span>
+    <span>🕐 <b id="generated"></b></span>
+  </div>
+</header>
+
+<!-- HERO: MASTER SUMMARY -->
+<div class="hero">
+  <div class="hero-title">★ ສະຫຼຸບການທຳນາຍງວດຕໍ່ໄປ ★</div>
+  <div class="hero-grid">
+    <div class="pred-card main">
+      <div class="pred-label">🎯 ເລກ 6 ຕົວ</div>
+      <span class="pred-number" id="pred6"></span>
+      <div class="conf-bar-wrap"><div class="conf-bar" id="conf6bar"></div></div>
+      <div class="conf-text">ໝັ້ນໃຈ <span id="conf6pct"></span>%</div>
     </div>
+    <div class="pred-card">
+      <div class="pred-label">🔣 ທ້າຍ 4 ຕົວ</div>
+      <span class="pred-number" id="pred4"></span>
+      <div class="conf-bar-wrap"><div class="conf-bar" id="conf4bar" style="background:linear-gradient(90deg,#29d4b8,#4d9fff)"></div></div>
+      <div class="conf-text">ໝັ້ນໃຈ <span id="conf4pct"></span>%</div>
     </div>
-    <h1 style="padding: 10px;">ຊື້ເລກເດີພີ່ນ້ອງເອີຍ</h1>
-    <div class="slogan">✨ ສິຊື້ຈົນກວ່າສິໄດ້ 10,000 ລ້ານ ✨</div>
-    <div class="status-row">
-      <div class="pill"><span class="dot" id="sDot"></span><span id="sTxt">ກຳລັງໂຫລດ...</span></div>
+    <div class="pred-card">
+      <div class="pred-label">🔢 ທ້າຍ 3 ຕົວ</div>
+      <span class="pred-number" id="pred3"></span>
+      <div class="conf-bar-wrap"><div class="conf-bar" id="conf3bar" style="background:linear-gradient(90deg,#29d4b8,#4d9fff)"></div></div>
+      <div class="conf-text">ໝັ້ນໃຈ <span id="conf3pct"></span>%</div>
+    </div>
+    <div class="pred-card">
+      <div class="pred-label">🎲 ທ້າຍ 2 ຕົວ</div>
+      <span class="pred-number" id="pred2"></span>
+      <div class="conf-text" style="margin-top:12px;color:var(--muted)">จาก Ensemble</div>
     </div>
   </div>
-
-  <!-- Avatars -->
-  <div class="avatar-section">
-    <div class="avatar-section-title">🧑‍🤝‍🧑 ທີມງານຊື້ເລກບໍ່ຖືກ</div>
-    <div class="avatar-row" id="avatarRow">
-      <!-- slots rendered by JS -->
-    </div>
-  </div>
-
-  <!-- Latest -->
-  <div class="latest-card" id="latestCard" style="display:none">
-    <div class="latest-meta">
-      <span class="latest-label">ງວດລ່າສຸດ</span>
-      <span class="latest-round" id="lRound">—</span>
-      <span class="latest-date" id="lDate">—</span>
-    </div>
-    <div class="digits" id="lDigits"></div>
-  </div>
-
-  <!-- Main -->
-  <div id="main">
-    <div class="state-box">
-      <div class="loader"></div>
-      <span class="loader-txt">ດຶງຂໍ້ມູນຈາກ API...</span>
-    </div>
-  </div>
-
-  <div class="footer" id="footer" style="display:none">
-    ⚠️ ຫວຍ = Random 100% · ໃຊ້ເປັນພຽງການວິເຄາະທາງສະຖິຕິ · ບໍ່ຖືກເຕະແຊນດີ້ 🙏
-  </div>
-
 </div>
 
+<!-- FREQUENCY + DUE -->
+<div class="section">
+  <div class="section-head">
+    <div class="section-icon">📈</div>
+    <h2>ວິເຄາະຄວາມຖີ່ຕົວເລກ</h2>
+    <span>Frequency Analysis</span>
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <h3>ການກະຈາຍຕົວເລກ 0–9</h3>
+      <div class="freq-grid" id="freqGrid"></div>
+      <div style="display:flex;gap:12px;margin-top:14px;font-size:12px">
+        <span><span class="badge badge-hot">HOT</span> ອອກເລື້ອຍ</span>
+        <span><span class="badge badge-cold">COLD</span> ອອກໜ້ອຍ</span>
+        <span><span class="badge badge-norm">OK</span> ປົກກະຕິ</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3>ຕົວເລກທີ່ຄ້າງນານ (Due Numbers)</h3>
+      <div id="dueList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- POSITION ANALYSIS -->
+<div class="section">
+  <div class="section-head">
+    <div class="section-icon">📍</div>
+    <h2>ການກະຈາຍຕາມຕຳແໜ່ງ</h2>
+    <span>Position Analysis</span>
+  </div>
+  <div class="card">
+    <h3>ຕົວເລກທີ່ອອກເລື້ອຍໃນແຕ່ລະຕຳແໜ່ງ</h3>
+    <div class="pos-grid" id="posGrid"></div>
+  </div>
+</div>
+
+<!-- LAST 2 DIGITS -->
+<div class="section">
+  <div class="section-head">
+    <div class="section-icon">🎲</div>
+    <h2>ເລກທ້າຍ 2 ຕົວ</h2>
+    <span>Last-2 Digit Analysis</span>
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <h3>ຄູ່ທ້າຍ 2 ຕົວທີ່ອອກເລື້ອຍ</h3>
+      <div class="pair-grid" id="pairGrid"></div>
+    </div>
+    <div class="card">
+      <h3>Markov Chain: ຈາກ <span id="markov2from" style="color:var(--gold)"></span> → ?</h3>
+      <div class="markov-list" id="markov2list"></div>
+    </div>
+  </div>
+  <div style="margin-top:16px">
+    <div class="card">
+      <h3>ທາງເລືອກ 6 ຕົວ (Alternative Predictions)</h3>
+      <div class="alt-grid" id="altGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 3-DIGIT -->
+<div class="section">
+  <div class="section-head">
+    <div class="section-icon">🔢</div>
+    <h2>ເລກທ້າຍ 3 ຕົວ</h2>
+    <span>3-Digit Tail Prediction</span>
+  </div>
+  <div class="three-col">
+    <div class="card">
+      <h3>Top 5 ຄວາມຖີ່</h3>
+      <table class="combo-table" id="freq3table"></table>
+    </div>
+    <div class="card">
+      <h3>Markov: <span id="markov3from" style="color:var(--gold)"></span> → ?</h3>
+      <div class="markov-list" id="markov3list"></div>
+    </div>
+    <div class="card">
+      <h3>ທ້າຍ 3 ຕົວຄ້າງດົນ</h3>
+      <table class="combo-table" id="due3table"></table>
+    </div>
+  </div>
+</div>
+
+<!-- 4-DIGIT -->
+<div class="section">
+  <div class="section-head">
+    <div class="section-icon">🔣</div>
+    <h2>ເລກທ້າຍ 4 ຕົວ</h2>
+    <span>4-Digit Tail Prediction</span>
+  </div>
+  <div class="three-col">
+    <div class="card">
+      <h3>Top 5 ຄວາມຖີ່</h3>
+      <table class="combo-table" id="freq4table"></table>
+    </div>
+    <div class="card">
+      <h3>Markov last3→last4: <span id="markov4from" style="color:var(--gold)"></span></h3>
+      <div class="markov-list" id="markov4list"></div>
+      <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
+        <div style="font-size:11px;color:var(--muted);letter-spacing:2px;margin-bottom:8px">MARKOV last4→last4: <span id="markov4bfrom" style="color:var(--gold)"></span></div>
+        <div class="markov-list" id="markov4blist"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>ທ້າຍ 4 ຕົວຄ້າງດົນ</h3>
+      <table class="combo-table" id="due4table"></table>
+    </div>
+  </div>
+</div>
+
+<!-- HISTORY -->
+<div class="section">
+  <div class="section-head">
+    <div class="section-icon">📜</div>
+    <h2>ຜົນຫວຍຍ້ອນຫຼັງ</h2>
+    <span>Recent History (15 ງວດລ່າສຸດ)</span>
+  </div>
+  <div class="card" style="padding:0;overflow:hidden">
+    <table class="hist-table" id="histTable">
+      <thead><tr>
+        <th>ງວດ</th><th>ວັນທີ</th><th>ເລກທີ່ອອກ</th><th>ທ້າຍ 2</th><th>ທ້າຍ 3</th><th>ທ້າຍ 4</th>
+      </tr></thead>
+      <tbody id="histBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  <strong>⚠️ ຄຳເຕືອນ / DISCLAIMER</strong><br>
+  ການວິເຄາະນີ້ເປັນການສຶກສາທາງສະຖິຕິເທົ່ານັ້ນ ບໍ່ໃຊ່ການທຳນາຍທີ່ແນ່ນອນ!
+  ຫວຍເປັນການສຸ່ມ (Random) ບໍ່ມີຮູບແບບຈາກສະຖິຕິໃດທີ່ຖືກຕ້ອງ 100%.
+  ໃຊ້ເປັນຂໍ້ມູນປະກອບການຕັດສິນໃຈ ບໍ່ໃຊ່ຕັດສິນໃຈດ້ວຍດຽວ.
+  ວິທີທີ່ໃຊ້: Frequency Analysis · Position Analysis · Due Number · Markov Chain · Ridge Regression · Ensemble Voting.
+</div>
+
+</div><!-- /wrap -->
+
 <script>
+const DATA = {
+  "meta": {
+    "total_rounds": 83,
+    "date_from": "2025-08-29",
+    "date_to": "2026-03-11",
+    "latest_round": 29,
+    "latest_number": "845181",
+    "generated": "2026-03-13 16:59:05"
+  },
+  "summary": {
+    "six_digit": {
+      "number": "000702",
+      "confidence": 33.3
+    },
+    "four_digit": {
+      "number": "0702",
+      "confidence": 31.2,
+      "freq_top": [
+        "3798",
+        "2926",
+        "8976"
+      ],
+      "markov_top": []
+    },
+    "three_digit": {
+      "number": "702",
+      "confidence": 29.2,
+      "freq_top": [
+        "798",
+        "958",
+        "509"
+      ],
+      "markov_top": []
+    },
+    "two_digit": {
+      "number": "02"
+    }
+  },
+  "alternatives": {
+    "alt1": "004709",
+    "alt2": "000",
+    "alt3": "072369",
+    "alt4": "544455"
+  },
+  "freq_data": [
+    {
+      "digit": 0,
+      "count": 63,
+      "pct": 12.7,
+      "status": "hot"
+    },
+    {
+      "digit": 1,
+      "count": 40,
+      "pct": 8.0,
+      "status": "cold"
+    },
+    {
+      "digit": 2,
+      "count": 49,
+      "pct": 9.8,
+      "status": "normal"
+    },
+    {
+      "digit": 3,
+      "count": 43,
+      "pct": 8.6,
+      "status": "normal"
+    },
+    {
+      "digit": 4,
+      "count": 54,
+      "pct": 10.8,
+      "status": "normal"
+    },
+    {
+      "digit": 5,
+      "count": 56,
+      "pct": 11.2,
+      "status": "normal"
+    },
+    {
+      "digit": 6,
+      "count": 48,
+      "pct": 9.6,
+      "status": "normal"
+    },
+    {
+      "digit": 7,
+      "count": 47,
+      "pct": 9.4,
+      "status": "normal"
+    },
+    {
+      "digit": 8,
+      "count": 47,
+      "pct": 9.4,
+      "status": "normal"
+    },
+    {
+      "digit": 9,
+      "count": 51,
+      "pct": 10.2,
+      "status": "normal"
+    }
+  ],
+  "hot_digits": [
+    0
+  ],
+  "cold_digits": [
+    1
+  ],
+  "due_numbers": [
+    {
+      "digit": 0,
+      "gap": 3
+    },
+    {
+      "digit": 7,
+      "gap": 3
+    },
+    {
+      "digit": 2,
+      "gap": 1
+    },
+    {
+      "digit": 3,
+      "gap": 1
+    },
+    {
+      "digit": 6,
+      "gap": 1
+    },
+    {
+      "digit": 9,
+      "gap": 1
+    },
+    {
+      "digit": 1,
+      "gap": 0
+    },
+    {
+      "digit": 4,
+      "gap": 0
+    },
+    {
+      "digit": 5,
+      "gap": 0
+    },
+    {
+      "digit": 8,
+      "gap": 0
+    }
+  ],
+  "pos_data": [
+    {
+      "pos": 1,
+      "top": [
+        {
+          "digit": 0,
+          "count": 12
+        },
+        {
+          "digit": 5,
+          "count": 11
+        },
+        {
+          "digit": 2,
+          "count": 9
+        }
+      ]
+    },
+    {
+      "pos": 2,
+      "top": [
+        {
+          "digit": 0,
+          "count": 16
+        },
+        {
+          "digit": 4,
+          "count": 16
+        },
+        {
+          "digit": 5,
+          "count": 10
+        }
+      ]
+    },
+    {
+      "pos": 3,
+      "top": [
+        {
+          "digit": 4,
+          "count": 12
+        },
+        {
+          "digit": 3,
+          "count": 12
+        },
+        {
+          "digit": 0,
+          "count": 9
+        }
+      ]
+    },
+    {
+      "pos": 4,
+      "top": [
+        {
+          "digit": 7,
+          "count": 12
+        },
+        {
+          "digit": 9,
+          "count": 11
+        },
+        {
+          "digit": 5,
+          "count": 10
+        }
+      ]
+    },
+    {
+      "pos": 5,
+      "top": [
+        {
+          "digit": 0,
+          "count": 12
+        },
+        {
+          "digit": 5,
+          "count": 11
+        },
+        {
+          "digit": 7,
+          "count": 10
+        }
+      ]
+    },
+    {
+      "pos": 6,
+      "top": [
+        {
+          "digit": 9,
+          "count": 15
+        },
+        {
+          "digit": 8,
+          "count": 11
+        },
+        {
+          "digit": 2,
+          "count": 11
+        }
+      ]
+    }
+  ],
+  "last2_top": [
+    {
+      "pair": "09",
+      "count": 4
+    },
+    {
+      "pair": "26",
+      "count": 4
+    },
+    {
+      "pair": "52",
+      "count": 3
+    },
+    {
+      "pair": "39",
+      "count": 3
+    },
+    {
+      "pair": "79",
+      "count": 3
+    },
+    {
+      "pair": "88",
+      "count": 2
+    },
+    {
+      "pair": "01",
+      "count": 2
+    },
+    {
+      "pair": "98",
+      "count": 2
+    },
+    {
+      "pair": "62",
+      "count": 2
+    },
+    {
+      "pair": "58",
+      "count": 2
+    }
+  ],
+  "markov2": {
+    "from": "81",
+    "top": []
+  },
+  "last3_freq": [
+    {
+      "combo": "798",
+      "count": 2
+    },
+    {
+      "combo": "958",
+      "count": 2
+    },
+    {
+      "combo": "509",
+      "count": 2
+    },
+    {
+      "combo": "926",
+      "count": 2
+    },
+    {
+      "combo": "541",
+      "count": 2
+    }
+  ],
+  "last3_due": [
+    {
+      "combo": "976",
+      "gap": 82
+    },
+    {
+      "combo": "088",
+      "gap": 81
+    },
+    {
+      "combo": "701",
+      "gap": 80
+    },
+    {
+      "combo": "775",
+      "gap": 79
+    },
+    {
+      "combo": "709",
+      "gap": 77
+    }
+  ],
+  "markov3": {
+    "from": "181",
+    "top": []
+  },
+  "last4_freq": [
+    {
+      "combo": "3798",
+      "count": 2
+    },
+    {
+      "combo": "2926",
+      "count": 2
+    },
+    {
+      "combo": "8976",
+      "count": 1
+    },
+    {
+      "combo": "4088",
+      "count": 1
+    },
+    {
+      "combo": "0701",
+      "count": 1
+    }
+  ],
+  "last4_due": [
+    {
+      "combo": "8976",
+      "gap": 82
+    },
+    {
+      "combo": "4088",
+      "gap": 81
+    },
+    {
+      "combo": "0701",
+      "gap": 80
+    },
+    {
+      "combo": "8775",
+      "gap": 79
+    },
+    {
+      "combo": "1709",
+      "gap": 77
+    }
+  ],
+  "markov4_3to4": {
+    "from": "181",
+    "top": []
+  },
+  "markov4_4to4": {
+    "from": "5181",
+    "top": []
+  },
+  "recent_history": [
+    {
+      "round": 29,
+      "date": "2026-03-11",
+      "number": "845181"
+    },
+    {
+      "round": 28,
+      "date": "2026-03-06",
+      "number": "392926"
+    },
+    {
+      "round": 27,
+      "date": "2026-03-04",
+      "number": "412958"
+    },
+    {
+      "round": 26,
+      "date": "2026-03-02",
+      "number": "073289"
+    },
+    {
+      "round": 25,
+      "date": "2026-02-27",
+      "number": "742571"
+    },
+    {
+      "round": 24,
+      "date": "2026-02-25",
+      "number": "264779"
+    },
+    {
+      "round": 23,
+      "date": "2026-02-23",
+      "number": "060013"
+    },
+    {
+      "round": 22,
+      "date": "2026-02-20",
+      "number": "241955"
+    },
+    {
+      "round": 21,
+      "date": "2026-02-18",
+      "number": "606209"
+    },
+    {
+      "round": 20,
+      "date": "2026-02-16",
+      "number": "943702"
+    },
+    {
+      "round": 19,
+      "date": "2026-02-13",
+      "number": "966668"
+    },
+    {
+      "round": 18,
+      "date": "2026-02-11",
+      "number": "596469"
+    },
+    {
+      "round": 17,
+      "date": "2026-02-09",
+      "number": "225509"
+    },
+    {
+      "round": 16,
+      "date": "2026-02-06",
+      "number": "837430"
+    },
+    {
+      "round": 15,
+      "date": "2026-02-04",
+      "number": "168073"
+    }
+  ]
+};
 
+// Meta
+document.getElementById('totalRounds').textContent = DATA.meta.total_rounds;
+document.getElementById('dateRange').textContent = DATA.meta.date_from + ' → ' + DATA.meta.date_to;
+document.getElementById('latestRound').textContent = DATA.meta.latest_round;
+document.getElementById('latestNumber').textContent = DATA.meta.latest_number;
+document.getElementById('generated').textContent = DATA.meta.generated;
 
-const AVATARS = [
-    { name: "A", src: "./pic/A.png"},
-    { name: "Amy", src: "./pic/amy.png"},
-    { name: "Sandy", src: "./pic/sandy.png"},
-    { name: "Den", src: "./pic/den.png"},
-    { name: "Ning", src: "./pic/ning.png"},
-    { name: "Jim", src: "./pic/jim.png"},
-    // { name: "Berd", src: "./berd.png"},
-]
+// Hero
+const s = DATA.summary;
+document.getElementById('pred6').textContent = s.six_digit.number;
+document.getElementById('conf6pct').textContent = s.six_digit.confidence;
+document.getElementById('conf6bar').style.width = s.six_digit.confidence + '%';
+document.getElementById('pred4').textContent = s.four_digit.number;
+document.getElementById('conf4pct').textContent = s.four_digit.confidence;
+document.getElementById('conf4bar').style.width = s.four_digit.confidence + '%';
+document.getElementById('pred3').textContent = s.three_digit.number;
+document.getElementById('conf3pct').textContent = s.three_digit.confidence;
+document.getElementById('conf3bar').style.width = s.three_digit.confidence + '%';
+document.getElementById('pred2').textContent = s.two_digit.number;
 
+// Frequency
+const maxCount = Math.max(...DATA.freq_data.map(f => f.count));
+const fg = document.getElementById('freqGrid');
+DATA.freq_data.forEach(f => {
+  const cl = f.status === 'hot' ? 'hot' : f.status === 'cold' ? 'cold' : '';
+  const badge = f.status === 'hot' ? '<span class="badge badge-hot">HOT</span>' :
+                f.status === 'cold' ? '<span class="badge badge-cold">COLD</span>' :
+                '<span class="badge badge-norm">OK</span>';
+  fg.innerHTML += `<div class="freq-cell ${cl}">
+    <div class="d">${f.digit}</div>
+    <div class="pct">${f.pct}%</div>
+    <div class="bar-bg"><div class="bar-fill" style="width:${(f.count/maxCount*100).toFixed(0)}%"></div></div>
+    ${badge}
+  </div>`;
+});
 
-function buildAvatars() {
-  const row = document.getElementById('avatarRow');
-  AVATARS.forEach((s, i) => {
-    const slot = document.createElement('div');
-    slot.className = 'avatar-slot';
-    slot.innerHTML = `
-      <div class="avatar-ring" id="ring${i}">
-        <img id="img${i}" src="${s.src}" alt="${s.name}" class="loaded">
-      </div>
-      <span class="avatar-name" id="aname${i}" contenteditable="true" spellcheck="false">${s.name}</span>
-     <input type="file" class="avatar-input"   id="file${i}" disabled accept="image/*">
-    `;
-    row.appendChild(slot);
-    slot.querySelector('.avatar-ring').addEventListener('click', () => {
-      document.getElementById(`file${i}`).click();
-    });
-    document.getElementById(`file${i}`).addEventListener('change', e => {
-      const f = e.target.files[0]; if (!f) return;
-      const url = URL.createObjectURL(f);
-      const img = document.getElementById(`img${i}`);
-      img.src = url;
-      img.classList.add('loaded');
-    });
-  });
-}
-buildAvatars();
+// Due
+const maxGap = Math.max(...DATA.due_numbers.map(d => d.gap));
+const dl = document.getElementById('dueList');
+DATA.due_numbers.forEach(d => {
+  dl.innerHTML += `<div class="due-row">
+    <div class="due-digit">${d.digit}</div>
+    <div class="due-bar-wrap"><div class="due-bar-fill" style="width:${(d.gap/maxGap*100).toFixed(0)}%"></div></div>
+    <div class="due-gap">${d.gap} ງວດ</div>
+  </div>`;
+});
 
-// ── API ───────────────────────────────────────────────────
-const API = 'https://inseehub.com/api/website/laolot/WinPrizeHistory?type=1';
-
-async function loadData() {
-  const res  = await fetch(API);
-  const json = await res.json();
-  if (json.status !== 200 || json.error) throw new Error(json.msg || 'API error');
-  return json.resultData
-    .filter(d => d.winNumber && d.winNumber.length === 6)
-    .map(d => ({ round: parseInt(d.roundNumber), date: d.roundDate.slice(0,10), win: d.winNumber }))
-    .sort((a,b) => a.date.localeCompare(b.date));
-}
-
-// ── Stats ─────────────────────────────────────────────────
-function count(arr) { const c={}; arr.forEach(v=>c[v]=(c[v]||0)+1); return c; }
-
-function predict(tails) {
-  const total=tails.length, freq=count(tails);
-  const fs=Object.fromEntries(Object.entries(freq).map(([k,v])=>[k,v/total]));
-  const rs={};
-  [...tails].reverse().forEach((v,i)=>rs[v]=(rs[v]||0)+1/(i+1));
-  const ms={}, last=tails[tails.length-1];
-  for(let i=0;i<tails.length-1;i++) if(tails[i]===last) ms[tails[i+1]]=(ms[tails[i+1]]||0)+1;
-  const norm=d=>{const s=Object.values(d).reduce((a,b)=>a+b,0);return s>0?Object.fromEntries(Object.entries(d).map(([k,v])=>[k,v/s])):d;};
-  const fn=norm(fs),rn=norm(rs),mn=norm(ms);
-  const keys=new Set([...Object.keys(fn),...Object.keys(rn),...Object.keys(mn)]);
-  return [...keys].map(k=>[k,.30*(fn[k]||0)+.40*(rn[k]||0)+.30*(mn[k]||0)]).sort((a,b)=>b[1]-a[1]);
-}
-
-function getMarkov(tails) {
-  const last=tails[tails.length-1],nexts={};
-  for(let i=0;i<tails.length-1;i++) if(tails[i]===last) nexts[tails[i+1]]=(nexts[tails[i+1]]||0)+1;
-  return Object.entries(nexts).sort((a,b)=>b[1]-a[1]).slice(0,3);
-}
-
-// ── Render helpers ────────────────────────────────────────
-function mkHint(mk, lastVal) {
-  if (!mk.length) return `<div class="mk-hint"><span class="mk-from">'${lastVal}'</span><span class="mk-arrow">→</span><span style="color:var(--muted)">ຂໍ້ມູນໜ້ອຍ</span></div>`;
-  const items = mk.map(([n,c])=>`<span class="mk-to">'${n}'</span><span class="mk-cnt">(${c}ຄ.)</span>`).join('<span class="mk-arrow"> · </span>');
-  return `<div class="mk-hint">🔄 <span class="mk-from">'${lastVal}'</span><span class="mk-arrow">→</span>${items}</div>`;
-}
-
-function predRows(results, barClass, data) {
-  const max = results[0]?.[1]||1;
-  return results.slice(0,8).map(([num,sc],i) => {
-    const cnt = count(data)[num]||0;
-    const pct = (sc/max*100).toFixed(0);
-    const rowCls = i===0?'top1':i===1?'top2':i===2?'top3':'';
-    const rankCls = i===0?'r1':i===1?'r2':i===2?'r3':'';
-    return `<div class="pred-row ${rowCls}">
-      <span class="rank ${rankCls}">${i+1}</span>
-      <span class="pred-num-val ${rankCls}">${num}</span>
-      <span class="freq-tag">${cnt}ຄ.</span>
-      <div class="bar-wrap"><div class="bar-bg"><div class="bar-in ${barClass}" style="width:${pct}%"></div></div></div>
-      <span class="score-tag">${sc.toFixed(3)}</span>
-    </div>`;
-  }).join('');
-}
-
-function chipsHTML(results, cls) {
-  return `<span class="chips-label">🏆 Top 5</span>` +
-    results.slice(0,5).map(([n],i)=>`<span class="chip ${cls} ${i===0?'c1':''}">${n}</span>`).join('');
-}
-
-// ── Render ────────────────────────────────────────────────
-function render(rows) {
-  const latest  = rows[rows.length-1];
-  const t2=rows.map(r=>r.win.slice(-2)), t3=rows.map(r=>r.win.slice(-3)), t4=rows.map(r=>r.win.slice(-4));
-  const top2=predict(t2), top3=predict(t3), top4=predict(t4);
-  const l2=latest.win.slice(-2), l3=latest.win.slice(-3), l4=latest.win.slice(-4);
-
-  // per-position
-  const posData=[1,2,3,4,5,6].map(p=>{
-    const vals=rows.map(r=>r.win[p-1]);
-    return { p, top:Object.entries(count(vals)).sort((a,b)=>b[1]-a[1]).slice(0,5) };
-  });
-
-  // latest
-  document.getElementById('lRound').textContent = `ງວດທີ ${latest.round}`;
-  document.getElementById('lDate').textContent  = latest.date;
-  document.getElementById('lDigits').innerHTML  = latest.win.split('').map((d,i)=>
-    `${i===2||i===4?'<span class="digit-sep">·</span>':''}<div class="digit">${d}</div>`
+// Position
+const pg = document.getElementById('posGrid');
+DATA.pos_data.forEach(p => {
+  let chips = p.top.map((t, i) =>
+    `<div class="chip rank${i+1}">${t.digit} <span style="font-size:10px;color:var(--muted)">(${t.count})</span></div>`
   ).join('');
-  document.getElementById('latestCard').style.display='flex';
-  document.getElementById('sDot').style.background='var(--mint)';
-  document.getElementById('sTxt').textContent=`${rows.length} ງວດ · ສົດ`;
+  pg.innerHTML += `<div class="pos-row">
+    <div class="pos-label">ຕຳແໜ່ງ ${p.pos}</div>
+    <div class="pos-chips">${chips}</div>
+  </div>`;
+});
 
-  document.getElementById('main').innerHTML = `
+// Last2 pairs
+const pgrid = document.getElementById('pairGrid');
+DATA.last2_top.forEach(p => {
+  pgrid.innerHTML += `<div class="pair-cell"><div class="pn">${p.pair}</div><div class="pc">${p.count} ຄ.</div></div>`;
+});
 
-    <!-- 2T -->
-    <div class="sec-card">
-      <div class="sec-head">
-        <span class="sec-badge badge-2t">2 ຕົວ</span>
-        <span class="sec-title">ທ້າຍ 2 ຕົວ</span>
-        <span class="sec-latest">ລ່າສຸດ: ${l2}</span>
-      </div>
-      <div class="pred-list">${predRows(top2,'bar-2t',t2)}</div>
-      <div class="chips-row">${chipsHTML(top2,'')}</div>
-    </div>
-
-    <!-- 3T -->
-    <div class="sec-card">
-      <div class="sec-head">
-        <span class="sec-badge badge-3t">3 ຕົວ</span>
-        <span class="sec-title">ທ້າຍ 3 ຕົວ</span>
-        <span class="sec-latest">ລ່າສຸດ: ${l3}</span>
-      </div>
-      ${mkHint(getMarkov(t3), l3)}
-      <div class="pred-list">${predRows(top3,'bar-3t',t3)}</div>
-      <div class="chips-row">${chipsHTML(top3,'c3t')}</div>
-    </div>
-
-    <!-- 4T -->
-    <div class="sec-card">
-      <div class="sec-head">
-        <span class="sec-badge badge-4t">4 ຕົວ</span>
-        <span class="sec-title">ທ້າຍ 4 ຕົວ</span>
-        <span class="sec-latest">ລ່າສຸດ: ${l4}</span>
-      </div>
-      ${mkHint(getMarkov(t4), l4)}
-      <div class="pred-list">${predRows(top4,'bar-4t',t4)}</div>
-      <div class="chips-row">${chipsHTML(top4,'c4t')}</div>
-    </div>
-
-    <!-- Per position -->
-    <div class="sec-card">
-      <div class="sec-head">
-        <span class="sec-badge badge-pos">ຕຳແໜ່ງ</span>
-        <span class="sec-title">ຄວາມຖີ່ຕໍ່ຕຳແໜ່ງ</span>
-      </div>
-      <div class="pos-grid">
-        ${posData.map(({p,top})=>`
-          <div class="pos-card">
-            <div class="pos-card-label">ຕຳ ${p}</div>
-            <div class="pos-nums">
-              ${top.map(([d,c],i)=>`<div class="pos-num ${i===0?'hi':''}" title="${c}ຄ.">${d}</div>`).join('')}
-            </div>
-          </div>
-        `).join('')}
-      </div>
-    </div>
-
-    <!-- Summary -->
-    <div class="sec-card">
-      <div class="sec-head">
-        <span class="sec-badge badge-sum">🏆 ສະຫຼຸບ</span>
-        <span class="sec-title">ທຳນາຍງວດທີ ${latest.round+1}</span>
-      </div>
-      <div class="sum-rows">
-        <div class="sum-row">
-          <span class="sum-label sum-2t">2T</span>
-          <div class="sum-nums">${top2.slice(0,5).map(([n],i)=>`<span class="snum ${i===0?'s1':''}">${n}</span>`).join('')}</div>
-        </div>
-        <div class="sum-row">
-          <span class="sum-label sum-3t">3T</span>
-          <div class="sum-nums">${top3.slice(0,5).map(([n],i)=>`<span class="snum ${i===0?'s1':''}">${n}</span>`).join('')}</div>
-        </div>
-        <div class="sum-row">
-          <span class="sum-label sum-4t">4T</span>
-          <div class="sum-nums">${top4.slice(0,5).map(([n],i)=>`<span class="snum ${i===0?'s1':''}">${n}</span>`).join('')}</div>
-        </div>
-      </div>
-    </div>
-  `;
-
-  document.getElementById('footer').style.display='block';
-}
-
-function showError(msg) {
-  document.getElementById('sDot').style.background='#ff6b6b';
-  document.getElementById('sTxt').textContent='ດຶງຂໍ້ມູນບໍ່ສຳເລັດ';
-  document.getElementById('main').innerHTML=`
-    <div class="state-box">
-      <div style="font-size:40px">😢</div>
-      <div style="font-size:14px;color:#e06b7a;font-weight:600">${msg}</div>
+// Markov2
+document.getElementById('markov2from').textContent = DATA.markov2.from;
+const m2l = document.getElementById('markov2list');
+if (DATA.markov2.top.length === 0) {
+  m2l.innerHTML = '<div style="color:var(--muted);font-size:13px">ຂໍ້ມູນຍັງໜ້ອຍ</div>';
+} else {
+  DATA.markov2.top.forEach(m => {
+    m2l.innerHTML += `<div class="markov-row">
+      <span style="color:var(--muted);font-size:16px">→</span>
+      <span class="markov-combo">${m.pair}</span>
+      <span class="markov-cnt">${m.count} ຄ.</span>
     </div>`;
+  });
 }
 
-loadData().then(render).catch(e=>showError(e.message));
+// Alternatives
+const alts = [
+  {label: 'ຄວາມຖີ່ຕຳແໜ່ງ', num: DATA.alternatives.alt1},
+  {label: 'ຕົວເລກຮ້ອນ', num: DATA.alternatives.alt2},
+  {label: 'ຕົວຄ້າງ (Due)', num: DATA.alternatives.alt3},
+  {label: 'ML Regression', num: DATA.alternatives.alt4},
+];
+const ag = document.getElementById('altGrid');
+alts.forEach(a => {
+  ag.innerHTML += `<div class="alt-card">
+    <div class="alt-method">${a.label}</div>
+    <div class="alt-number">${a.num}</div>
+  </div>`;
+});
+
+// 3-digit freq
+const f3t = document.getElementById('freq3table');
+f3t.innerHTML = '<tr><th>#</th><th>ເລກ</th><th>ຄັ້ງ</th></tr>';
+DATA.last3_freq.forEach((r, i) => {
+  f3t.innerHTML += `<tr><td><span class="rank-badge">${i+1}</span></td><td style="color:var(--gold);letter-spacing:2px;font-weight:700">${r.combo}</td><td style="color:var(--muted)">${r.count}</td></tr>`;
+});
+
+// Markov3
+document.getElementById('markov3from').textContent = DATA.markov3.from;
+const m3l = document.getElementById('markov3list');
+if (DATA.markov3.top.length === 0) {
+  m3l.innerHTML = '<div style="color:var(--muted);font-size:13px">ຂໍ້ມູນ transition ຍັງໜ້ອຍ</div>';
+} else {
+  DATA.markov3.top.forEach(m => {
+    m3l.innerHTML += `<div class="markov-row"><span style="color:var(--muted)">→</span><span class="markov-combo">${m.combo}</span><span class="markov-cnt">${m.count} ຄ.</span></div>`;
+  });
+}
+
+// Due3
+const d3t = document.getElementById('due3table');
+d3t.innerHTML = '<tr><th>ເລກ</th><th>ຄ້າງ (ງວດ)</th></tr>';
+DATA.last3_due.forEach(r => {
+  d3t.innerHTML += `<tr><td>${r.combo}</td><td style="color:var(--muted)">${r.gap}</td></tr>`;
+});
+
+// 4-digit freq
+const f4t = document.getElementById('freq4table');
+f4t.innerHTML = '<tr><th>#</th><th>ເລກ</th><th>ຄັ້ງ</th></tr>';
+DATA.last4_freq.forEach((r, i) => {
+  f4t.innerHTML += `<tr><td><span class="rank-badge">${i+1}</span></td><td style="color:var(--gold);letter-spacing:2px;font-weight:700">${r.combo}</td><td style="color:var(--muted)">${r.count}</td></tr>`;
+});
+
+// Markov4
+document.getElementById('markov4from').textContent = DATA.markov4_3to4.from;
+const m4l = document.getElementById('markov4list');
+if (DATA.markov4_3to4.top.length === 0) {
+  m4l.innerHTML = '<div style="color:var(--muted);font-size:13px">ຂໍ້ມູນ transition ຍັງໜ້ອຍ</div>';
+} else {
+  DATA.markov4_3to4.top.forEach(m => {
+    m4l.innerHTML += `<div class="markov-row"><span style="color:var(--muted)">→</span><span class="markov-combo">${m.combo}</span><span class="markov-cnt">${m.count} ຄ.</span></div>`;
+  });
+}
+document.getElementById('markov4bfrom').textContent = DATA.markov4_4to4.from;
+const m4bl = document.getElementById('markov4blist');
+if (DATA.markov4_4to4.top.length === 0) {
+  m4bl.innerHTML = '<div style="color:var(--muted);font-size:13px">ຂໍ້ມູນ transition ຍັງໜ້ອຍ</div>';
+} else {
+  DATA.markov4_4to4.top.forEach(m => {
+    m4bl.innerHTML += `<div class="markov-row"><span style="color:var(--muted)">→</span><span class="markov-combo">${m.combo}</span><span class="markov-cnt">${m.count} ຄ.</span></div>`;
+  });
+}
+
+// Due4
+const d4t = document.getElementById('due4table');
+d4t.innerHTML = '<tr><th>ເລກ</th><th>ຄ້າງ (ງວດ)</th></tr>';
+DATA.last4_due.forEach(r => {
+  d4t.innerHTML += `<tr><td>${r.combo}</td><td style="color:var(--muted)">${r.gap}</td></tr>`;
+});
+
+// History
+const hotSet = new Set(DATA.hot_digits.map(String));
+const hb = document.getElementById('histBody');
+DATA.recent_history.forEach((r, idx) => {
+  const digits = r.number.split('').map(d =>
+    `<span class="dn${hotSet.has(d) ? ' h' : ''}">${d}</span>`
+  ).join('');
+  hb.innerHTML += `<tr>
+    <td class="hist-round">#${r.round}</td>
+    <td style="color:var(--text2);font-size:12px">${r.date}</td>
+    <td><div class="hist-num">${digits}</div></td>
+    <td style="color:var(--teal);font-weight:700;letter-spacing:2px">${r.number.slice(-2)}</td>
+    <td style="color:var(--gold);font-weight:700;letter-spacing:2px">${r.number.slice(-3)}</td>
+    <td style="color:var(--blue);font-weight:700;letter-spacing:2px">${r.number.slice(-4)}</td>
+  </tr>`;
+});
 </script>
 </body>
 </html>
